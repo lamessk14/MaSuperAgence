@@ -3,25 +3,38 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Property;
+use App\Form\PropertyType;
 use App\Repository\PropertyRepository;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class PropertyController extends AbstractController
+class AdminPropertyController extends AbstractController
 {
     /**
      * @var PropertyRepository
      */
     private $property_repository;
+    /**
+     * @var ObjectManager
+     */
+    private $em;
 
-    public function __construct(PropertyRepository $property_repository)
+    /**
+     * AdminPropertyController constructor.
+     * @param PropertyRepository $property_repository
+     */
+    public function __construct(PropertyRepository $property_repository, ObjectManager $em)
     {
         $this->property_repository = $property_repository;
+        $this->em = $em;
     }
 
     /**
-     * @Route("/admin", name="admin.property.index")
+     * @Route("/admin/property", name="admin.property.index")
      *
      * @return Response
      */
@@ -32,13 +45,66 @@ class PropertyController extends AbstractController
     }
 
     /**
-     * @Route("/admin/{id}", name="admin.property.edit")
+     * @Route("/admin/property/create", name="admin.property.create")
      *
-     * @param Property $property
+     * @param Request $request
      * @return Response
      */
-    public function edit(Property $property): Response
+    public function create(Request $request): Response
     {
-        return $this->render('admin/property/edit.html.twig', compact('property'));
+        $property = new Property();
+        $form = $this->createForm(PropertyType::class, $property);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($property);
+            $this->em->flush();
+            $this->addFlash('success', 'Created successfully');
+            return $this->redirectToRoute('admin.property.index');
+        }
+        return $this->render('admin/property/create.html.twig', [
+            'property' => $property,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/admin/property/edit/{id}", name="admin.property.edit", methods="GET|POST")
+     *
+     * @param Property $property
+     * @param Request $request
+     * @return Response
+     */
+    public function edit(Property $property, Request $request): Response
+    {
+        $form = $this->createForm(PropertyType::class, $property);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->flush();
+            $this->addFlash('success', 'Updated successfully');
+            return $this->redirectToRoute('admin.property.index');
+        }
+        return $this->render('admin/property/edit.html.twig', [
+            'property' => $property,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/admin/property/edit/{id}", name="admin.property.delete", methods="DELETE")
+     *
+     * @param Property $property
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function delete(Property $property, Request $request): RedirectResponse
+    {
+        if ($this->isCsrfTokenValid('delete' . $property->getId(), $request->get('_token'))) {
+            $this->em->remove($property);
+            $this->em->flush();
+            $this->addFlash('success', 'Deleted successfully');
+        }
+        return $this->redirectToRoute('admin.property.index');
     }
 }
