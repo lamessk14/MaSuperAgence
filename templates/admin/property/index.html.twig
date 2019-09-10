@@ -39,7 +39,10 @@
             </tbody>
         </table>
         <div class="text-right">
-            <a href="{{ path('admin.property.create') }}" class="btn btn-primary">Create a new property</a>
+            <a href="{{ path('admin.property.new') }}" class="btn btn-primary">Create a new property</a>
+        </div>
+        <div class="pagination">
+            {{ knp_pagination_render(properties) }}
         </div>
     </div>
 {% endblock %}

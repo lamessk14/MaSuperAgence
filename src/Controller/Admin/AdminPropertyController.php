@@ -6,6 +6,7 @@ use App\Entity\Property;
 use App\Form\PropertyType;
 use App\Repository\PropertyRepository;
 use Doctrine\Common\Persistence\ObjectManager;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,6 +27,7 @@ class AdminPropertyController extends AbstractController
     /**
      * AdminPropertyController constructor.
      * @param PropertyRepository $property_repository
+     * @param ObjectManager $em
      */
     public function __construct(PropertyRepository $property_repository, ObjectManager $em)
     {
@@ -36,21 +38,25 @@ class AdminPropertyController extends AbstractController
     /**
      * @Route("/admin/property", name="admin.property.index")
      *
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      */
-    public function index(): Response
+    public function index(PaginatorInterface $paginator, Request $request): Response
     {
-        $properties = $this->property_repository->findAll();
+        $properties = $paginator->paginate($this->property_repository->findAll(),
+            $request->query->getInt('page', 1),
+            7);
         return $this->render('admin/property/index.html.twig', compact('properties'));
     }
 
     /**
-     * @Route("/admin/property/create", name="admin.property.create")
+     * @Route("/admin/property/new", name="admin.property.new")
      *
      * @param Request $request
      * @return Response
      */
-    public function create(Request $request): Response
+    public function new(Request $request): Response
     {
         $property = new Property();
         $form = $this->createForm(PropertyType::class, $property);
@@ -62,7 +68,7 @@ class AdminPropertyController extends AbstractController
             $this->addFlash('success', 'Created successfully');
             return $this->redirectToRoute('admin.property.index');
         }
-        return $this->render('admin/property/create.html.twig', [
+        return $this->render('admin/property/new.html.twig', [
             'property' => $property,
             'form' => $form->createView()
         ]);
