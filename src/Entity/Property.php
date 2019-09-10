@@ -191,7 +191,7 @@ class Property
         return $this;
     }
 
-    public function getFormatedPrice(): string
+    public function getFormattedPrice(): string
     {
         return number_format($this->price, 0, '', ' ');
     }
