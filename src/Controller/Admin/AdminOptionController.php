@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Option;
 use App\Form\OptionType;
 use App\Repository\OptionRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,32 +14,40 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/admin/option")
  */
-class OptionController extends AbstractController
+class AdminOptionController extends AbstractController
 {
     /**
      * @var OptionRepository
      */
-    private $property_repository;
+    private $optionRepository;
 
-    public function __construct(OptionRepository $option_repository)
+    /**
+     * OptionController constructor.
+     * @param OptionRepository $optionRepository
+     */
+    public function __construct(OptionRepository $optionRepository)
     {
-        $this->property_repository = $option_repository;
+        $this->optionRepository = $optionRepository;
     }
 
     /**
-     * @Route("/", name="option_index", methods={"GET"})
-     * @param OptionRepository $option_repository
+     * @Route("/", name="admin.option.index", methods={"GET"})
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      */
-    public function index(OptionRepository $option_repository): Response
+    public function index(PaginatorInterface $paginator, Request $request): Response
     {
-        return $this->render('option/index.html.twig', [
-            'options' => $this->property_repository->findAll(),
+        $options = $paginator->paginate($this->optionRepository->findAll(),
+            $request->query->getInt('page', 1),
+            7);
+        return $this->render('admin/option/index.html.twig', [
+            'options' => $options,
         ]);
     }
 
     /**
-     * @Route("/new", name="option_new", methods={"GET","POST"})
+     * @Route("/new", name="admin.option.new", methods={"GET","POST"})
      * @param Request $request
      * @return Response
      */
@@ -52,30 +61,31 @@ class OptionController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($option);
             $entityManager->flush();
+            $this->addFlash('success', 'Created successfully');
 
-            return $this->redirectToRoute('option_index');
+            return $this->redirectToRoute('admin.option.index');
         }
 
-        return $this->render('option/new.html.twig', [
+        return $this->render('admin/option/new.html.twig', [
             'option' => $option,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="option_show", methods={"GET"})
+     * @Route("/{id}", name="admin.option.show", methods={"GET"})
      * @param Option $option
      * @return Response
      */
-    public function show(Option $option): Response
+    /*public function show(Option $option): Response
     {
-        return $this->render('option/show.html.twig', [
+        return $this->render('admin/option/show.html.twig', [
             'option' => $option,
         ]);
-    }
+    }*/
 
     /**
-     * @Route("/{id}/edit", name="option_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="admin.option.edit", methods={"GET","POST"})
      * @param Request $request
      * @param Option $option
      * @return Response
@@ -87,18 +97,18 @@ class OptionController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('option_index');
+            $this->addFlash('success', 'Updated successfully');
+            return $this->redirectToRoute('admin.option.index');
         }
 
-        return $this->render('option/edit.html.twig', [
+        return $this->render('admin/option/edit.html.twig', [
             'option' => $option,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="option_delete", methods={"DELETE"})
+     * @Route("/{id}", name="admin.option.delete", methods={"DELETE"})
      * @param Request $request
      * @param Option $option
      * @return Response
@@ -109,8 +119,9 @@ class OptionController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($option);
             $entityManager->flush();
+            $this->addFlash('success', 'Deleted successfully');
         }
 
-        return $this->redirectToRoute('option_index');
+        return $this->redirectToRoute('admin.option.index');
     }
 }

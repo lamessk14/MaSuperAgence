@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PropertyRepository")
- * @UniqueEntity("title")
+ * @UniqueEntity("title", groups={"new"})
  */
 class Property
 {
@@ -95,7 +95,7 @@ class Property
     private $created_at;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Option", mappedBy="properties")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Option", inversedBy="properties")
      */
     private $options;
 
