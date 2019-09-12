@@ -2,31 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c7db215b-4eaa-41d5-ae61-b36b0586619e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/templates/admin/option/_forms.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/admin/option/edit.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/admin/option/index.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/admin/option/new.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/MaSuperAgence.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/MaSuperAgence.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Admin/OptionController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Option.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Option.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Property.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Property.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/PropertySearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/PropertySearch.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/OptionType.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/PropertySearchType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/PropertySearchType.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Form/PropertyType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/PropertyType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20190910142038.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/PropertyRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/PropertyRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/admin/property/forms/_forms.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/property/forms/_forms.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/option/_delete_form.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/option/_form.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/option/edit.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/option/index.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/option/new.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/option/show.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/property/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/property/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/property/_property.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/property/_property.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -170,6 +157,12 @@
       <path value="$PROJECT_DIR$/vendor/fzaninotto/faker" />
       <path value="$PROJECT_DIR$/vendor/knplabs/knp-components" />
       <path value="$PROJECT_DIR$/vendor/knplabs/knp-paginator-bundle" />
+      <path value="$PROJECT_DIR$/vendor/behat/transliterator" />
+      <path value="$PROJECT_DIR$/vendor/vich/uploader-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/templating" />
+      <path value="$PROJECT_DIR$/vendor/jms/metadata" />
+      <path value="$PROJECT_DIR$/vendor/liip/imagine-bundle" />
+      <path value="$PROJECT_DIR$/vendor/imagine/imagine" />
     </include_path>
   </component>
   <component name="ProjectId" id="1QNUy3YSeTb0PAmxwjv0L94ABnD" />
@@ -184,13 +177,13 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\wamp64\www\MaSuperAgence\templates\admin\option" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\wamp64\www\MaSuperAgence\templates\admin" />
       <recent name="C:\wamp64\www\MaSuperAgence\src\Controller\Admin" />
       <recent name="C:\wamp64\www\MaSuperAgence\src\Controller" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\wamp64\www\MaSuperAgence\templates\admin\option" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -221,6 +214,7 @@
       <workItem from="1567754262400" duration="15572000" />
       <workItem from="1568013632249" duration="1247000" />
       <workItem from="1568014891678" duration="61956000" />
+      <workItem from="1568270677051" duration="13766000" />
     </task>
     <servers />
   </component>
