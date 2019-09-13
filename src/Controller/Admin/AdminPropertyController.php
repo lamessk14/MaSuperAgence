@@ -55,6 +55,7 @@ class AdminPropertyController extends AbstractController
      *
      * @param Request $request
      * @return Response
+     * @throws \Exception
      */
     public function new(Request $request): Response
     {

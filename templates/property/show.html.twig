@@ -4,16 +4,27 @@
 
 {% block body %}
     <div class="jumbotron">
-        <div class="row">
-            <div class="col-md-8">
-
-            </div>
-            <div class="col-md-4">
-                <h1> {{ property.title }}</h1>
-                <h2> {{ property.rooms }} pièces - {{ property.surface }} m²</h2>
-                <div class="text-primary" style="font-size: 4rem; font-weight: bold;">{{ property.formattedPrice }} €
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    {% if property.filename %}
+                        <img src="{{ vich_uploader_asset(property, 'imageFile') | imagine_filter('medium') }}"
+                             class="card-img-top"
+                             style="width: 100%; height: auto">
+                    {% else %}
+                        <img src="{{ '/images/properties/empty_home.jpg' | imagine_filter('medium') }}"
+                             class="card-img-top"
+                             style="width: 100%; height: auto">
+                    {% endif %}
                 </div>
-                <a href="#" class="btn btn-primary">Contacter l'agence</a>
+                <div class="col-md-4">
+                    <h1> {{ property.title }}</h1>
+                    <h2> {{ property.rooms }} pièces - {{ property.surface }} m²</h2>
+                    <div class="text-primary" style="font-size: 4rem; font-weight: bold;">{{ property.formattedPrice }}
+                        €
+                    </div>
+                    <a href="#" class="btn btn-primary">Contacter l'agence</a>
+                </div>
             </div>
         </div>
     </div>
@@ -51,6 +62,11 @@
             </div>
             <div class="col-md-4">
                 <h2>Particularities</h2>
+                <ul class="list-group">
+                    {% for option in property.options %}
+                        <li class="list-group-item"> {{ option.name }}</li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </div>
