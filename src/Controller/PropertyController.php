@@ -9,12 +9,12 @@ use App\Form\ContactType;
 use App\Form\PropertySearchType;
 use App\Notification\ContactNotification;
 use App\Repository\PropertyRepository;
-use Doctrine\Common\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 class PropertyController extends AbstractController
 {
@@ -24,19 +24,12 @@ class PropertyController extends AbstractController
     private $repository;
 
     /**
-     * @var ObjectManager
-     */
-    private $em;
-
-    /**
      * PropertyController constructor.
      * @param PropertyRepository $repository
-     * @param ObjectManager $em
      */
-    public function __construct(PropertyRepository $repository, ObjectManager $em)
+    public function __construct(PropertyRepository $repository)
     {
         $this->repository = $repository;
-        $this->em = $em;
     }
 
     /**

@@ -5,7 +5,6 @@ namespace App\Controller\Admin;
 use App\Entity\Property;
 use App\Form\PropertyType;
 use App\Repository\PropertyRepository;
-use Doctrine\Common\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -19,20 +18,14 @@ class AdminPropertyController extends AbstractController
      * @var PropertyRepository
      */
     private $property_repository;
-    /**
-     * @var ObjectManager
-     */
-    private $em;
 
     /**
      * AdminPropertyController constructor.
      * @param PropertyRepository $property_repository
-     * @param ObjectManager $em
      */
-    public function __construct(PropertyRepository $property_repository, ObjectManager $em)
+    public function __construct(PropertyRepository $property_repository)
     {
         $this->property_repository = $property_repository;
-        $this->em = $em;
     }
 
     /**
@@ -64,8 +57,8 @@ class AdminPropertyController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->em->persist($property);
-            $this->em->flush();
+            $this->getDoctrine()->getManager()->persist($property);
+            $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Created successfully');
             return $this->redirectToRoute('admin.property.index');
         }
@@ -88,7 +81,7 @@ class AdminPropertyController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->em->flush();
+            $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Updated successfully');
             return $this->redirectToRoute('admin.property.index');
         }
@@ -99,7 +92,7 @@ class AdminPropertyController extends AbstractController
     }
 
     /**
-     * @Route("/admin/property/edit/{id}", name="admin.property.delete", methods="DELETE")
+     * @Route("/admin/property/delete/{id}", name="admin.property.delete", methods="DELETE")
      *
      * @param Property $property
      * @param Request $request
@@ -108,8 +101,8 @@ class AdminPropertyController extends AbstractController
     public function delete(Property $property, Request $request): RedirectResponse
     {
         if ($this->isCsrfTokenValid('delete' . $property->getId(), $request->get('_token'))) {
-            $this->em->remove($property);
-            $this->em->flush();
+            $this->getDoctrine()->getManager()->remove($property);
+            $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Deleted successfully');
         }
         return $this->redirectToRoute('admin.property.index');
