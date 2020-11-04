@@ -14,6 +14,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 
 class PropertyController extends AbstractController
@@ -64,6 +67,9 @@ class PropertyController extends AbstractController
      * @param Request $request
      * @param ContactNotification $notification
      * @return Response
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function show(Property $property, string $slug, Request $request, ContactNotification $notification): Response
     {
@@ -76,22 +82,23 @@ class PropertyController extends AbstractController
 
         $contact = new Contact();
         $contact->setProperty($property);
+
         $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $notification->notify($contact);
             $this->addFlash('success', 'Your email has been sent');
-            /*return $this->redirectToRoute('property.show', [
-                'id' => $property->getId(),
+            return $this->redirectToRoute('property.show', [
+                'id'   => $property->getId(),
                 'slug' => $property->getSlug()
-            ]);*/
+            ]);
         }
 
         return $this->render('property/show.html.twig', [
-            'property' => $property,
+            'property'     => $property,
             'current_link' => 'properties',
-            'form' => $form->createView()
+            'form'         => $form->createView()
         ]);
     }
 }

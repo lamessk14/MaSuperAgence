@@ -32,21 +32,19 @@ class ContactNotification
 
     /**
      * @param Contact $contact
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
-    public function notify(Contact $contact)
-    {
-        try {
-            $message = (new \Swift_Message('Agency :' . $contact->getProperty()->getTitle()))
-                ->setFrom('noreply@agency.fr')
-                ->setTo('contact@agency.fr')
-                ->setReplyTo($contact->getEmail())
-                ->setBody($this->renderer->render('emails/contact.html.twig'), [
-                    'contact' => $contact
-                ], 'text/html');
-            $this->mailer->send($message);
-        } catch (LoaderError $e) {
-        } catch (RuntimeError $e) {
-        } catch (SyntaxError $e) {
-        }
+    public function notify(Contact $contact){
+        $message = (new \Swift_Message('Agency :' . $contact->getProperty()->getTitle()))
+            ->setFrom('noreply@agency.fr')
+            ->setTo('testdevmail35@gmail.com')
+            ->setReplyTo($contact->getEmail())
+            ->setBody($this->renderer->render('emails/contact.html.twig', [
+                'contact' => $contact
+            ]), 'text/html');
+
+        $this->mailer->send($message);
     }
 }
